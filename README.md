@@ -1,3 +1,17 @@
+# linkize
+
+## This is a fork
+
+Differnce for upstream
+
+- Allow customize phone RegExp
+
+## Installation
+
+```shell
+npm install linkize --save
+```
+
 # Autolinker.js
 
 Because I had so much trouble finding a good auto-linking implementation out in
@@ -17,7 +31,7 @@ So, this utility attempts to handle everything. It:
 - Will autolink mentions (Twitter, Instagram).
 - Will autolink hashtags.
 - Will properly handle HTML input. The utility will not change the `href`
-  attribute inside anchor (&lt;a&gt;) tags (or any other tag/attribute), 
+  attribute inside anchor (&lt;a&gt;) tags (or any other tag/attribute),
   and will not accidentally wrap the inner text of an anchor tag with a
   new one (which would cause doubly-nested anchor tags).
 
@@ -29,18 +43,18 @@ Live Example: [http://gregjacobs.github.io/Autolinker.js/examples/live-example/]
 
 ## v1.0 released. Breaking Changes from 0.x -> 1.x
 
-1. `twitter` option removed, replaced with `mention` (which accepts 'twitter' 
+1. `twitter` option removed, replaced with `mention` (which accepts 'twitter'
    and 'instagram' values)
 2. Matching mentions (previously the `twitter` option) now defaults to
-   being turned off. Previously, Twitter handle matching was on by 
+   being turned off. Previously, Twitter handle matching was on by
    default.
-3. `replaceFn` option now called with just one argument: the `Match` 
-   object (previously was called with two arguments: `autolinker` and 
+3. `replaceFn` option now called with just one argument: the `Match`
+   object (previously was called with two arguments: `autolinker` and
    `match`)
-4. (Used inside the `replaceFn`) `TwitterMatch` replaced with 
-   `MentionMatch`, and `MentionMatch.getType()` now returns `'mention'` 
+4. (Used inside the `replaceFn`) `TwitterMatch` replaced with
+   `MentionMatch`, and `MentionMatch.getType()` now returns `'mention'`
    instead of `'twitter'`
-5. (Used inside the `replaceFn`) `TwitterMatch.getTwitterHandle()` -> 
+5. (Used inside the `replaceFn`) `TwitterMatch.getTwitterHandle()` ->
    `MentionMatch.getMention()`
 
 
@@ -122,7 +136,7 @@ providing an Object as the second parameter to [Autolinker.link()](http://gregja
   `true` to have URLs auto-linked, `false` to skip auto-linking of URLs.
   Defaults to `true`.<br>
 
-  This option also accepts an Object form with 3 properties to allow for 
+  This option also accepts an Object form with 3 properties to allow for
   more customization of what exactly gets linked. All default to `true`:
 
     - schemeMatches (Boolean): `true` to match URLs found prefixed with a scheme,
@@ -154,28 +168,28 @@ providing an Object as the second parameter to [Autolinker.link()](http://gregja
   values at this time are 'twitter', 'facebook' and 'instagram'. Pass `false` to skip
   auto-linking of hashtags. Defaults to `false`.<br /><br />
 - [stripPrefix](http://gregjacobs.github.io/Autolinker.js/api/#!/api/Autolinker-cfg-stripPrefix) : Boolean<br />
-  `true` to have the `'http://'` (or `'https://'`) and/or the `'www.'` 
-  stripped from the beginning of displayed links, `false` otherwise. 
+  `true` to have the `'http://'` (or `'https://'`) and/or the `'www.'`
+  stripped from the beginning of displayed links, `false` otherwise.
   Defaults to `true`.<br />
-  
-  This option also accepts an Object form with 2 properties to allow for 
-  more customization of what exactly is prevented from being displayed. 
+
+  This option also accepts an Object form with 2 properties to allow for
+  more customization of what exactly is prevented from being displayed.
   Both default to `true`:
 
     - scheme (Boolean): `true` to prevent the scheme part of a URL match
-      from being displayed to the user. Example: `'http://google.com'` 
-      will be displayed as `'google.com'`. `false` to not strip the 
+      from being displayed to the user. Example: `'http://google.com'`
+      will be displayed as `'google.com'`. `false` to not strip the
       scheme. NOTE: Only an `'http://'` or `'https://'` scheme will be
       removed, so as not to remove a potentially dangerous scheme (such
       as `'file://'` or `'javascript:'`).
     - www (Boolean): `true` to prevent the `'www.'` part of a URL match
       from being displayed to the user. Ex: `'www.google.com'` will be
       displayed as `'google.com'`. `false` to not strip the `'www'`.
-  
+
   <br /><br />
 - [stripTrailingSlash](http://gregjacobs.github.io/Autolinker.js/api/#!/api/Autolinker-cfg-stripTrailingSlash) : Boolean<br />
   `true` to remove the trailing slash from URL matches, `false` to keep
-  the trailing slash. Example when `true`: `http://google.com/` will be 
+  the trailing slash. Example when `true`: `http://google.com/` will be
   displayed as `http://google.com`. Defaults to `true`.
 - [truncate](http://gregjacobs.github.io/Autolinker.js/api/#!/api/Autolinker-cfg-truncate) : Number/Object<br />
   A number for how many characters long URLs/emails/Twitter handles/Twitter
@@ -368,17 +382,12 @@ The full API docs for Autolinker may be referenced at:
 Pull requests definitely welcome.
 
 - Make sure to add tests to cover your new functionality/bugfix.
-- Run the `gulp test` command to build/test (or alternatively, open the 
+- Run the `gulp test` command to build/test (or alternatively, open the
   `tests/index.html` file to run the tests).
-- When committing, please omit checking in the files in the `dist/` 
-  folder after building/testing. These are only committed to the 
-  repository for users downloading Autolinker via Bower. I will build 
+- When committing, please omit checking in the files in the `dist/`
+  folder after building/testing. These are only committed to the
+  repository for users downloading Autolinker via Bower. I will build
   these files and assign them a version number when merging your PR.
-- Please use tabs for indents! Tabs are better for everybody 
-  (individuals can set their editors to different tab sizes based on 
+- Please use tabs for indents! Tabs are better for everybody
+  (individuals can set their editors to different tab sizes based on
   their visual preferences).
-
-
-## Changelog
-
-See [Releases](https://github.com/gregjacobs/Autolinker.js/releases)

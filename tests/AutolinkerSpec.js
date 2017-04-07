@@ -1118,12 +1118,12 @@ describe( "Autolinker", function() {
                 expect( autolinker.link( "1-555-666-7777,234523#" ) ).toBe( '<a href="tel:15556667777,234523#">1-555-666-7777,234523#</a>' );
                 expect( autolinker.link( "+1-555-666-7777,234523#" ) ).toBe( '<a href="tel:+15556667777,234523#">+1-555-666-7777,234523#</a>' );
                 expect( autolinker.link( "+1-555-666-7777,234523,233" ) ).toBe( '<a href="tel:+15556667777,234523,233">+1-555-666-7777,234523,233</a>' );
-                expect( autolinker.link( "+22016350659,;,55#;;234   ,  3334443323" ) ).toBe( '<a href="tel:+22016350659,;,55#;;234">+22016350659,;,55#;;234</a>   ,  3334443323' );                
+                expect( autolinker.link( "+22016350659,;,55#;;234   ,  3334443323" ) ).toBe( '<a href="tel:+22016350659,;,55#;;234">+22016350659,;,55#;;234</a>   ,  3334443323' );
             } );
             it( "should NOT automatically link numbers when there are extensions with ,<numbers># followed by a number", function() {
                 expect( autolinker.link( "+1-555-666-7777,234523#233" ) ).toBe( '+1-555-666-7777,234523#233' );
                 expect( autolinker.link( "+1-555-666-7777,234523#abc" ) ).toBe( '<a href="tel:+15556667777,234523#">+1-555-666-7777,234523#</a>abc' );
-                expect( autolinker.link( "+1-555-666-7777,234523#,234523#abc" ) ).toBe( '<a href="tel:+15556667777,234523#,234523#">+1-555-666-7777,234523#,234523#</a>abc' );                
+                expect( autolinker.link( "+1-555-666-7777,234523#,234523#abc" ) ).toBe( '<a href="tel:+15556667777,234523#,234523#">+1-555-666-7777,234523#,234523#</a>abc' );
             } );
 		} );
 
@@ -2736,3 +2736,49 @@ describe( "Autolinker", function() {
 	} );
 
 } );
+
+describe( 'custom Phone.prototype.matcherRegex', function() {
+	const matcherRegexOriginal = Autolinker.matcher.Phone.prototype.matcherRegex;
+
+	beforeEach( function() {
+		const phoneInTextRegex = /(\+?852\-?)?[569]\d{3}\-?\d{4}/g;
+		Autolinker.matcher.Phone.prototype.matcherRegex = phoneInTextRegex;
+		Autolinker.matcher.Phone.prototype.testMatch = function() { return true; };
+	} );
+
+	afterEach( function() {
+		Autolinker.matcher.Phone.prototype.matcherRegex = matcherRegexOriginal;
+	} );
+
+	it( 'should match custom matcherRegex', function() {
+		var text = [
+			'91234567',
+			'9123-4567',
+			'61234567',
+			'51234567',
+			'+85291234567',
+			'+852-91234567',
+			'+852-9123-4567',
+			'852-91234567',
+			// invalid
+			'999',
+			'+852-912345678',
+			'123456789',
+			'+852-1234-56789',
+		].join( ' / ' );
+
+		var matches = Autolinker.parse( text, {
+			hashtag : 'twitter',
+			mention : 'twitter'
+		} );
+
+		expect( matches.length ).toBe( 9 );
+
+		expect( matches[ 0 ].getType() ).toBe( 'phone' );
+		expect( matches[ 0 ].getNumber() ).toBe( '91234567' );
+
+		expect( matches[ 2 ].getType() ).toBe( 'phone' );
+		expect( matches[ 2 ].getNumber() ).toBe( '61234567' );
+	} );
+
+});

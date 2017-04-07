@@ -235,4 +235,3 @@ function updateTldRegex(){
 		}))
 		.pipe(gulp.dest('./src/matcher/'));
 }
-

@@ -61,5 +61,4 @@ describe( "Autolinker.matcher.Phone", function() {
 
 	} );
 
-
 } );
